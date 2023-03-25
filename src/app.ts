@@ -1,23 +1,15 @@
-import * as dotenv from "dotenv";
-import Fastify from "fastify";
-import { routes } from "./routes";
+import { config } from "./core/config";
+import { buildServer } from "./server";
 
-dotenv.config();
-const server = Fastify({
-  logger: { level: "info", transport: { target: "pino-pretty" } },
-});
-
-server.get("/health", async () => {
-  return { status: "OK" };
+export const server = buildServer({
+  logger: true,
 });
 
 const main = async () => {
-  server.register(routes);
-
   try {
     await server.listen({
-      port: Number(process.env.PORT) || 3000,
-      host: "0.0.0.0",
+      host: config.server.host,
+      port: config.server.port,
     });
   } catch (err) {
     console.error(err);
