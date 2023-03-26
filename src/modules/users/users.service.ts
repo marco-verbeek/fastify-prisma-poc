@@ -1,5 +1,5 @@
 import * as argon2 from "argon2";
-import { prisma } from "../../core/prisma";
+import prisma from "../../core/prisma";
 import { CreateUserInput } from "./users.schema";
 
 export const createUser = async (input: CreateUserInput) => {
@@ -24,7 +24,7 @@ export const findUserByEmail = async (email: string) => {
   });
 };
 
-export const doesPasswordMatch = async (
+export const comparePasswords = async (
   password: string,
   hashedPassword: string
 ) => {

@@ -2,8 +2,8 @@ import { FastifyReply, FastifyRequest } from "fastify";
 import { server } from "../../app";
 import { CreateUserInput, LoginUserInput } from "./users.schema";
 import {
+  comparePasswords,
   createUser,
-  doesPasswordMatch,
   findUserByEmail,
   getAllUsers,
 } from "./users.service";
@@ -48,7 +48,7 @@ export const loginUserHandler = async (
     }
 
     // TODO: rename
-    const isPasswordCorrect = await doesPasswordMatch(
+    const isPasswordCorrect = await comparePasswords(
       body.password,
       user.hashedPassword
     );
